@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Correctly set locale
+sudo tee /etc/default/locale << EOF
+LC_CTYPE="en_US.UTF-8"
+LC_ALL="en_US.UTF-8"
+LANG="en_US.UTF-8"
+EOF
+sudo locale-gen
+
 # Updates
 sudo apt-get -y update
 sudo apt-get -y upgrade
@@ -12,6 +20,11 @@ sudo apt-get -y install build-essential
 sudo apt-get -y install unrar
 sudo apt-get -y install foremost
 sudo apt-get -y install htop
+sudo apt-get -y install vagrant-ssh
+sudo apt-get -y install cmake
+sudo apt-get -y install mosh
+# Need sshpass for gdb debugging over ssh in pwntools
+sudo apt-get -y install sshpass
 
 # QEMU with MIPS/ARM - http://reverseengineering.stackexchange.com/questions/8829/cross-debugging-for-mips-elf-with-qemu-toolchain
 sudo apt-get -y install qemu qemu-user qemu-user-static
@@ -113,6 +126,10 @@ git clone https://github.com/longld/peda.git
 git clone https://github.com/zachriggle/pwndbg
 # Install gef
 git clone https://github.com/hugsy/gef.git
+wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh
+# Install GEF dependencies
+sudo pip2 install capstone unicorn keystone-engine ropper
+sudo pip3 install capstone unicorn keystone-engine ropper
 # Install voltron
 git clone https://github.com/snare/voltron.git
 pushd voltron

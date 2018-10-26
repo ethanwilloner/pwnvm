@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.gui = false
     end
     u64.vm.provider "libvirt" do |lv, override|
-      override.vm.box = "algebro/ubuntu1604"
+      override.vm.box = "generic/ubuntu1804"
 
       # Sync a folder between the host and all guests.
       # Uncomment this line (and adjust as you like)
@@ -32,6 +32,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # If `vagrant up` hangs at Mounting NFS folders, modify your firewall configuration
       # to allow nfs, rpc, and mountd services
       #override.vm.synced_folder "~/ctf", "/ctf", :nfs => true
+      #override.vm.synced_folder "~/ctf", "/ctf"
+      config.vm.synced_folder "~/ctf", "/ctf", type: "sshfs"
       lv.memory = memory
       lv.graphics_type = "none"
     end
