@@ -73,10 +73,14 @@ popd
 sudo pip3 install pycparser # Use pip3 for Python3
 
 # Install radare2
+sudo apt install pkg-config
 git clone https://github.com/radare/radare2
 pushd radare2
 ./sys/install.sh
 popd
+# Install r2dec
+r2pm init
+r2pm install r2dec
 
 # Install binwalk
 git clone https://github.com/devttys0/binwalk
