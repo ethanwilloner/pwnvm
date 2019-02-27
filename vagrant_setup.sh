@@ -65,12 +65,22 @@ git clone https://github.com/aquynh/capstone
 pushd capstone
 git checkout -t origin/next
 sudo ./make.sh install
-cd bindings/python
+pushd bindings/python
 sudo python3 setup.py install # Ubuntu 14.04+, GDB uses Python3
-popd
+popd && popd
 
 # pycparser for pwndbg
 sudo pip3 install pycparser # Use pip3 for Python3
+
+# Install retdec
+sudo apt-get -y install build-essential cmake git perl python3 bison flex libfl-dev autoconf automake libtool pkg-config m4 zlib1g-dev upx doxygen graphviz
+git clone https://github.com/avast-tl/retdec
+pushd retdec
+mkdir build && pushd build
+cmake .. 
+make -j2
+make install
+popd && popd
 
 # Install radare2
 sudo apt install pkg-config
@@ -78,10 +88,14 @@ git clone https://github.com/radare/radare2
 pushd radare2
 ./sys/install.sh
 popd
-# Install r2dec
-r2pm init
-r2pm install r2dec
 
+# Update r2pm
+r2pm init
+r2pm update
+# Install r2dec
+r2pm install r2dec
+# Install r2 retdec plugin
+r2pm install r2retdec
 # Install binwalk
 git clone https://github.com/devttys0/binwalk
 pushd binwalk
